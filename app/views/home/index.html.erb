@@ -1,0 +1,15 @@
+<div class="jumbotron">
+  <h1>Merchant Sentiment!</h1>
+</div>
+<div class="row">
+  <div class="col-md-12">
+  	Merchant Name
+  </div>	
+</div>
+<% Merchant.all.each do |merchant| %>
+  <div class="row">
+    <div class="col-md-12">
+      <%= merchant.name %>
+    </div>
+  </div>
+<% end %>
