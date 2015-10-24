@@ -46,3 +46,6 @@ group :development do
   gem 'spring'
 end
 
+# this enables static asset serving and logging on heroku
+gem 'rails_12factor', group: :production
+

@@ -81,7 +81,6 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-  <<: *default
-  database: feedzai_communicator_production
-  username: feedzai_communicator
-  password: <%= ENV['FEEDZAI_COMMUNICATOR_DATABASE_PASSWORD'] %>
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
