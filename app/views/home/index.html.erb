@@ -4,7 +4,7 @@
 </div>
 <div class="row">
   <%= form_tag(root_url, method: :get) do %>
-    <%= select("Merchant", "merchant_id", options_for_select(Merchant.all.map{|m| m.name}, @merchant.name), {:include_blank => false, selected: :merchant}) %>
+    <%= select("Merchant", "merchant_id", options_for_select(Merchant.all.map{|m| m.name}, @merchant.name), {:include_blank => false, selected: :merchant}, {:class => 'form-control'}) %>
     <%= submit_tag "View Merchant", {:class => "btn btn-primary"} %>  
   <% end %>
   
