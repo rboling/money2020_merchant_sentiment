@@ -1,35 +1,83 @@
 <div class="jumbotron">
-  <h1>Merchant Sentiment!</h1>
+  <h1>Merchant Sentiment</h1>
 </div>
 <% Merchant.all.each do |merchant| %>
   <% merchant_id = "merchant-" + merchant.id.to_s + "-payments" %>
+  <div class="page-header">
+    <div class="row"> 
+      <div class="col-md-6">
+        <h2><%= merchant.name %></h2>
+      </div>
+      <div class="col-md-3">
+        <h3>Yelp Rating: <%= merchant.yelp_sum %></h3>
+      </div>
+      <div class="col-md-3">
+        <h3>BBB Rating: <%= merchant.alphabetic_bbb_rating %></h3>
+      </div>
+    </div>
+  </div>
+  <div class="page-header">
+    <h3>Pending Payments</h3>
+  </div>
   <div class="row">
-    <div class="col-md-3">
-      Merchant Name:
-    </div> 
-    <div class="col-md-9">
-      <%= merchant.name %>
+    <div class="col-md-12">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>amount</th>
+          <th>currency</th>
+          <th>Score Payment With Sentiment</th>
+          <th>Score Payment Without Sentiment</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% merchant.pending_payments.where(is_deleted: false).each do |pending_payment| %>
+          <tr>
+            <td><%= pending_payment.time.to_datetime %></td>
+            <td><%= pending_payment.amount/100 %></td>
+            <td><%= pending_payment.currency %></td>
+            <td><%= link_to "Score with Sentiment", { controller: "payments", action: "score_payment", pending_payment: pending_payment, sentiment: {yelp_sum: merchant.yelp_sum, bbb_rating: merchant.bbb_rating}}, { :class => "btn btn-primary", method: :post }%></td>
+            <td><%= link_to "Score without Sentiment", { controller: "payments", action: "score_payment", pending_payment: pending_payment}, { :class => "btn btn-info", method: :post }%></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
     </div>
   </div>
-  <div>Payments at <%=  merchant.name %></div>
-  <div class="merchant-payments" id="<%= "merchant-#{merchant.id}-payments" %>" >
-    <div class="row header">
-      <div class="col-md-2">Time</div>
-      <div class="col-md-2">amount</div>
-      <div class="col-md-2">currency</div>
-      <div class="col-md-2">likelyFraud</div>
-      <div class="col-md-2">label</div>
-    </div>
-    <% GetMerchantPayments.new.call(merchant).each do |paymentScore| %>
-    <div class="row merchant-payment">        
-      <div class="col-md-2"><%= Time.at(paymentScore["payment"]["timestamp"]).to_datetime %></div>
-      <div class="col-md-2"><%= paymentScore["payment"]["amount"]/100 %></div>
-      <div class="col-md-2"><%= paymentScore["payment"]["currency"] %></div>
-      <div class="col-md-2"><%= paymentScore["score"]["likelyFraud"] %></div>
-      <div class="col-md-2"><%= paymentScore["label"]%></div>
-      <div class="col-md-1"><button class="btn btn-sm btn-success">Label As OK</button></div>
-      <div class="col-md-1"><button class="btn btn-sm btn-danger">Label As Fraud</button></div>
+
+
+  <div class="page-header">
+    <h3>Processed Payments</h3>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>amount</th>
+          <th>currency</th>
+          <th>likelyFraud</th>
+          <th>label</th>
+          <th>Label as OK</th>
+          <th>Label as Fraud</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% GetMerchantPayments.new.call(merchant).each do |paymentScore| %>
+          <tr>
+            <td><%= Time.at(paymentScore["payment"]["timestamp"]).to_datetime %></td>
+            <td><%= paymentScore["payment"]["amount"]/100 %></td>
+            <td><%= paymentScore["payment"]["currency"] %></td>
+            <td><%= paymentScore["score"]["likelyFraud"] %></td>
+            <td><%= paymentScore["label"]%></td>
+            <td><%= link_to "Label as OK", { controller: "payments", action: "relabel_payment", payment: paymentScore["payment"], new_label: "ok"}, { :class => "btn btn-success", method: :put }%></td>
+            <td><%= link_to "Label as Fraud", { controller: "payments", action: "relabel_payment", payment: paymentScore["payment"], new_label: "fraud"}, { :class => "btn btn-danger", method: :put }%></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
     </div>
   </div>
-  <% end %>
 <% end %>

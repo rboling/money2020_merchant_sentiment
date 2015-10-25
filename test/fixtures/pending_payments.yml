@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  amount: 1
+  currency: MyString
+  country: MyString
+  user_id: MyString
+  time: 
+
+two:
+  amount: 1
+  currency: MyString
+  country: MyString
+  user_id: MyString
+  time: 
