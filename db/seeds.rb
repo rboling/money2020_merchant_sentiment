@@ -8,8 +8,8 @@
 
 # create the merchants for the demo
 
-Merchant.create(name: 'Dinette Design', api_key: "VxzAVCJetvZl/weXnpWclwrVrRJ7+fDcjxvMCBg8fzE=", email: "na@na.com", bbb_accredited: false, bbb_rating: 1, feedzai_username: "robert-boling-1", feedzai_password: "Y8YF2C4gWm")
-Merchant.create(name: 'Hamilton\'s sofa gallery', api_key: "r88gRhR/+nxTvSxdv9Te70blBlzSsSPb8ZYIjsGkjKs=", email: "na@na.com", bbb_accredited: true, bbb_rating: 13, feedzai_username: "robert-boling-2", feedzai_password: "vnrTayQMXu")
+#Merchant.create(name: 'Dinette Design', api_key: "VxzAVCJetvZl/weXnpWclwrVrRJ7+fDcjxvMCBg8fzE=", email: "na@na.com", bbb_accredited: false, bbb_rating: 1, feedzai_username: "robert-boling-1", feedzai_password: "Y8YF2C4gWm")
+#Merchant.create(name: 'Hamilton\'s sofa gallery', api_key: "r88gRhR/+nxTvSxdv9Te70blBlzSsSPb8ZYIjsGkjKs=", email: "na@na.com", bbb_accredited: true, bbb_rating: 13, feedzai_username: "robert-boling-2", feedzai_password: "vnrTayQMXu")
 
 # Merchant 1 payments
 PendingPayment.create(amount: 12000, currency: "USD", country: "US", time: DateTime.now, merchant_id: 1, is_deleted: false)
