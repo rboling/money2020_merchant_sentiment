@@ -1,7 +1,14 @@
 <div class="jumbotron">
   <h1>Merchant Sentiment</h1>
 </div>
-<% Merchant.all.each do |merchant| %>
+<div class="row">
+  <%= form_tag(root_url, method: :get) do %>
+    <%= select("Merchant", "merchant_id", options_for_select(Merchant.all.map{|m| m.name}, @merchant.name), {:include_blank => false, selected: :merchant}) %>
+    <%= submit_tag "View Merchant", {:class => "btn btn-primary"} %>  
+  <% end %>
+  
+</div>
+<% Array(@merchant).each do |merchant| %>
   <% merchant_id = "merchant-" + merchant.id.to_s + "-payments" %>
   <div class="page-header">
     <div class="row"> 
@@ -14,6 +21,31 @@
       <div class="col-md-3">
         <h3>BBB Rating: <%= merchant.alphabetic_bbb_rating %></h3>
       </div>
+    </div>
+  </div>
+  <div class="page-header">
+    <h3>Sentiment Breakdown</h3>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Stars</th>
+            <th>Review</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% merchant.yelp_reviews.each do |yelp_review| %>
+            <tr>
+              <td><%= yelp_review.stars %></td>
+              <td><%= yelp_review.review %></td>
+              <td><%= yelp_review.date %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
     </div>
   </div>
   <div class="page-header">
@@ -37,8 +69,8 @@
             <td><%= pending_payment.time.to_datetime %></td>
             <td><%= pending_payment.amount/100 %></td>
             <td><%= pending_payment.currency %></td>
-            <td><%= link_to "Score with Sentiment", { controller: "payments", action: "score_payment", pending_payment: pending_payment, sentiment: {yelp_sum: merchant.yelp_sum, bbb_rating: merchant.bbb_rating}}, { :class => "btn btn-primary", method: :post }%></td>
-            <td><%= link_to "Score without Sentiment", { controller: "payments", action: "score_payment", pending_payment: pending_payment}, { :class => "btn btn-info", method: :post }%></td>
+            <td><%= link_to "Score with Sentiment", { controller: "payments", action: "score_payment", pending_payment: pending_payment, merchant_name: @merchant.name, sentiment: {yelp_sum: merchant.yelp_sum, bbb_rating: merchant.bbb_rating}}, { :class => "btn btn-primary", method: :post }%></td>
+            <td><%= link_to "Score without Sentiment", { controller: "payments", action: "score_payment", pending_payment: pending_payment, merchant_name: @merchant.name}, { :class => "btn btn-info", method: :post }%></td>
           </tr>
         <% end %>
       </tbody>
@@ -60,6 +92,7 @@
           <th>currency</th>
           <th>likelyFraud</th>
           <th>label</th>
+          <th>score</th>
           <th>Label as OK</th>
           <th>Label as Fraud</th>
         </tr>
@@ -72,8 +105,9 @@
             <td><%= paymentScore["payment"]["currency"] %></td>
             <td><%= paymentScore["score"]["likelyFraud"] %></td>
             <td><%= paymentScore["label"]%></td>
-            <td><%= link_to "Label as OK", { controller: "payments", action: "relabel_payment", payment: paymentScore["payment"], new_label: "ok"}, { :class => "btn btn-success", method: :put }%></td>
-            <td><%= link_to "Label as Fraud", { controller: "payments", action: "relabel_payment", payment: paymentScore["payment"], new_label: "fraud"}, { :class => "btn btn-danger", method: :put }%></td>
+            <td><%= paymentScore["score"]["score"] %></td>
+            <td><%= link_to "Label as OK", { controller: "payments", action: "relabel_payment", payment: paymentScore["payment"], new_label: "ok", merchant_name: @merchant.name}, { :class => "btn btn-success", method: :put }%></td>
+            <td><%= link_to "Label as Fraud", { controller: "payments", action: "relabel_payment", payment: paymentScore["payment"], new_label: "fraud", merchant_name: @merchant.name}, { :class => "btn btn-danger", method: :put }%></td>
           </tr>
         <% end %>
       </tbody>
