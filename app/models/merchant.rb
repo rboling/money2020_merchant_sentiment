@@ -3,7 +3,10 @@ class Merchant < ActiveRecord::Base
   has_many :yelp_reviews
 
   def yelp_sum
-  	self.yelp_reviews.map{|yr| yr.stars}.sum/self.yelp_reviews.count
+    if self.yelp_reviews.count == 0
+      return 0
+    end
+  	return self.yelp_reviews.map{|yr| yr.stars}.sum/self.yelp_reviews.count
   end
 
   def alphabetic_bbb_rating

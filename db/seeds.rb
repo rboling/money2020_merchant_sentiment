@@ -16,7 +16,13 @@ PendingPayment.create(amount: 12000, currency: "USD", country: "US", time: DateT
 PendingPayment.create(amount: 111000, currency: "USD", country: "US", time: DateTime.now, merchant_id: 1, is_deleted: false)
 PendingPayment.create(amount: 234000, currency: "USD", country: "US", time: DateTime.now, merchant_id: 1, is_deleted: false)
 
+YelpReview.create(merchant_id: 1, stars: 1, review: "This place is a total nightmare!!!")
+YelpReview.create(merchant_id: 1, stars: 1, review: "Unfortunately, Mo and Damon have never been honest")
+
 # Merchant 2 payments
 PendingPayment.create(amount: 12000, currency: "USD", country: "US", time: DateTime.now, merchant_id: 2, is_deleted: false)
 PendingPayment.create(amount: 111000, currency: "USD", country: "US", time: DateTime.now, merchant_id: 2, is_deleted: false)
 PendingPayment.create(amount: 234000, currency: "USD", country: "US", time: DateTime.now, merchant_id: 2, is_deleted: false)
+
+YelpReview.create(merchant_id: 2, stars: 5, review: "very friendly and helpful customer service")
+YelpReview.create(merchant_id: 2, stars: 5, review: "What a find. Quality. And I mean quality furniture")
