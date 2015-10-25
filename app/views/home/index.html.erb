@@ -1,21 +1,34 @@
 <div class="jumbotron">
   <h1>Merchant Sentiment!</h1>
 </div>
-<div class="row">
-  <div class="col-md-12">
-  	Merchant Name
-  </div>	
-</div>
 <% Merchant.all.each do |merchant| %>
+  <% merchant_id = "merchant-" + merchant.id.to_s + "-payments" %>
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-3">
+      Merchant Name:
+    </div> 
+    <div class="col-md-9">
       <%= merchant.name %>
     </div>
   </div>
-  <% GetMerchantPayments.new.call(merchant).each do |payment| %>
-  <div class="row">
-    <div class="col-md-12">
-      <%= payment["id"] %>
+  <div>Payments at <%=  merchant.name %></div>
+  <div class="merchant-payments" id="<%= "merchant-#{merchant.id}-payments" %>" >
+    <div class="row header">
+      <div class="col-md-2">Time</div>
+      <div class="col-md-2">amount</div>
+      <div class="col-md-2">currency</div>
+      <div class="col-md-2">likelyFraud</div>
+      <div class="col-md-2">label</div>
+    </div>
+    <% GetMerchantPayments.new.call(merchant).each do |paymentScore| %>
+    <div class="row merchant-payment">        
+      <div class="col-md-2"><%= Time.at(paymentScore["payment"]["timestamp"]).to_datetime %></div>
+      <div class="col-md-2"><%= paymentScore["payment"]["amount"]/100 %></div>
+      <div class="col-md-2"><%= paymentScore["payment"]["currency"] %></div>
+      <div class="col-md-2"><%= paymentScore["score"]["likelyFraud"] %></div>
+      <div class="col-md-2"><%= paymentScore["label"]%></div>
+      <div class="col-md-1"><button class="btn btn-sm btn-success">Label As OK</button></div>
+      <div class="col-md-1"><button class="btn btn-sm btn-danger">Label As Fraud</button></div>
     </div>
   </div>
   <% end %>
