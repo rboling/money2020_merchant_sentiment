@@ -38,4 +38,9 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  # your sandboxed feedzai API key:
+  config.feedzai_key = "0154461f5e54a48e000000007cdd36ea0b51fdeb95c0b1033a407c321ce21fc0"
+
+  config.base_url = "https://sandbox.feedzai.com/v1/"
 end

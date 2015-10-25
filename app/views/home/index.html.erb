@@ -12,4 +12,11 @@
       <%= merchant.name %>
     </div>
   </div>
+  <% GetMerchantPayments.new.call(merchant).each do |payment| %>
+  <div class="row">
+    <div class="col-md-12">
+      <%= payment["id"] %>
+    </div>
+  </div>
+  <% end %>
 <% end %>

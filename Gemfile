@@ -46,6 +46,10 @@ group :development do
   gem 'spring'
 end
 
+# use rest-client to make RESTful calls with ruby idioms
+
+gem 'rest-client'
+
 # this enables static asset serving and logging on heroku
 gem 'rails_12factor', group: :production
 

@@ -76,4 +76,9 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # the production-specific api key for dealing with Feedzai (note: this should change if this app goes anywhere)
+  config.feedzai_key = "0154461f5e54a48e000000007cdd36ea0b51fdeb95c0b1033a407c321ce21fc0"
+
+  config.base_url = "https://sandbox.feedzai.com/v1/"
 end
