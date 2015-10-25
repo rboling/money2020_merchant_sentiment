@@ -27,7 +27,7 @@ PendingPayment.create(amount: 234000, currency: "USD", country: "US", time: Date
 # YelpReview.create(merchant_id: 2, stars: 5, review: "very friendly and helpful customer service")
 # YelpReview.create(merchant_id: 2, stars: 5, review: "What a find. Quality. And I mean quality furniture")
 
-YelpReview.all.each do |yr| 
-  yr.date = DateTime.now
-  yr.save
-end
+# YelpReview.all.each do |yr| 
+#   yr.date = DateTime.now
+#   yr.save
+# end
